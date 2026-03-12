@@ -3,15 +3,14 @@
 
 ## Project Title
 
----
 
 ## Problem Statement (max 150 words)
 
 ---
 
 ## Target User
-
----
+Primary Users:
+Small Financial Institutions, Individuals.
 
 ## Core Features
 
