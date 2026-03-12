@@ -6,8 +6,6 @@ Layered Banking Transaction Management Syatem.
 
 ## Problem Statement (max 150 words)
 
----
-
 ## Target User
 Primary Users:
 Small Financial Institutions, Individuals.
@@ -15,29 +13,17 @@ Secondary Users:
 
 ## Core Features
 
-- 
-- 
-- 
-
----
-
 ## OOP Concepts Used
-
+This Project makes the use of the following Object Oriented Programming Concepts:
 - Abstraction:
 - Inheritance:
 - Polymorphism:
 - Exception Handling:
 - Collections / Threads:
 
----
-
 ## Proposed Architecture Description
 
----
-
 ## How to Run
-
----
 
 ## Git Discipline Notes
 Minimum 10 meaningful commits required.
