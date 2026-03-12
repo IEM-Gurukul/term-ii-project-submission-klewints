@@ -2,16 +2,16 @@
 # PCCCS495 – Term II Project
 
 ## Project Title
-
----
+Layered Banking Transaction Management Syatem.
 
 ## Problem Statement (max 150 words)
 
 ---
 
 ## Target User
-
----
+Primary Users:
+Small Financial Institutions, Individuals.
+Secondary Users:
 
 ## Core Features
 
