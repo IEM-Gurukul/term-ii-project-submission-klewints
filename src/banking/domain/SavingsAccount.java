@@ -1,4 +1,6 @@
 package banking.domain;
+import banking.exception.InvalidTransactionException;
+import banking.exception.InsufficientBalanceException;
 
 public class SavingsAccount extends Account {
 
@@ -9,13 +11,13 @@ public class SavingsAccount extends Account {
     }
 
     @Override
-    public void withdraw(double amount) {
-        if (amount <= 0) {
-            System.out.println("Invalid withdrawal amount");
-        } else if ((balance - amount) < MIN_BALANCE) {
-            System.out.println("Cannot withdraw. Minimum balance of " + MIN_BALANCE + " must be maintained.");
-        } else {
-            balance -= amount;
-        }
+    public void withdraw(double amount) throws InsufficientBalanceException, InvalidTransactionException {
+    if (amount <= 0) {
+        throw new InvalidTransactionException("Invalid withdrawal amount");
+    } else if ((balance - amount) < MIN_BALANCE) {
+        throw new InsufficientBalanceException("Minimum balance must be maintained");
+    } else {
+        balance -= amount;
     }
+  }
 }

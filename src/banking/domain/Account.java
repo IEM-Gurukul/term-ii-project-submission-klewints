@@ -1,4 +1,6 @@
 package banking.domain;
+import banking.exception.InsufficientBalanceException;
+import banking.exception.InvalidTransactionException;
 
 public abstract class Account {
     protected String accountId;
@@ -31,15 +33,16 @@ public abstract class Account {
         }
     }
 
-    public void withdraw(double amount) {
-        if (amount <= 0) {
-            System.out.println("Invalid withdrawal amount");
-        } else if (amount > balance) {
-            System.out.println("Insufficient balance");
-        } else {
-            balance -= amount;
-        }
+
+  public void withdraw(double amount) throws InsufficientBalanceException, InvalidTransactionException {
+    if (amount <= 0) {
+        throw new InvalidTransactionException("Invalid withdrawal amount");
+    } else if (amount > balance) {
+        throw new InsufficientBalanceException("Insufficient balance");
+    } else {
+        balance -= amount;
     }
+ }
 
     @Override
     public String toString() {

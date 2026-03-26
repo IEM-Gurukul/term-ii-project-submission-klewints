@@ -18,16 +18,19 @@ public class Main {
         bankService.addAccount(acc1);
         bankService.addAccount(acc2);
 
-        // Perform operations
-        acc1.deposit(500);
+        // Perform operations // should respect minimum balance
+        try {
         acc1.withdraw(1000);
-
-        acc2.withdraw(1200); // should respect minimum balance
+        acc2.withdraw(1200);
+        bankService.transfer("A101", "A102", 500);
+        } catch (Exception e) {
+        System.out.println("Error: " + e.getMessage());
+     }
 
         // Display all accounts
         System.out.println("\n--- Account Details ---");
         bankService.displayAllAccounts();
-        bankService.transfer("A101", "A102", 500);
+        
         bankService.displayAllAccounts();
     }
 }

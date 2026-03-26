@@ -1,11 +1,16 @@
 package banking.service;
 
 import banking.domain.Account;
+import banking.domain.Transaction;
+import banking.exception.AccountNotFoundException;
+import banking.exception.InvalidTransactionException;
+import banking.exception.InsufficientBalanceException;
 import java.util.ArrayList;
 
 public class BankService {
 
     private ArrayList<Account> accounts;
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public BankService() {
         accounts = new ArrayList<>();
@@ -35,30 +40,35 @@ public class BankService {
             System.out.println(acc);
         }
     }
-public void transfer(String fromId, String toId, double amount) {
+ public void transfer(String fromId, String toId, double amount)
+        throws AccountNotFoundException, InvalidTransactionException, InsufficientBalanceException {
+
     Account fromAccount = findAccountById(fromId);
     Account toAccount = findAccountById(toId);
 
     if (fromAccount == null || toAccount == null) {
-        System.out.println("One or both accounts not found.");
-        return;
+        throw new AccountNotFoundException("One or both accounts not found");
     }
 
     if (amount <= 0) {
-        System.out.println("Invalid transfer amount.");
-        return;
+        throw new InvalidTransactionException("Transfer amount must be greater than zero");
     }
 
-    double initialBalance = fromAccount.getBalance();
-
+    // Withdraw from source account
     fromAccount.withdraw(amount);
 
-    // check if withdrawal actually happened
-    if (fromAccount.getBalance() < initialBalance) {
-        toAccount.deposit(amount);
-        System.out.println("Transfer successful.");
-    } else {
-        System.out.println("Transfer failed.");
-    }
+    // Deposit into destination account
+    toAccount.deposit(amount);
+
+    // Record transaction
+    Transaction transaction = new Transaction(
+            "T" + (transactions.size() + 1),
+            "TRANSFER",
+            amount,
+            fromId,
+            toId
+    );
+
+    transactions.add(transaction);
 }
 }
