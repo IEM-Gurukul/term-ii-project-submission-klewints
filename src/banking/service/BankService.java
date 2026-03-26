@@ -35,4 +35,30 @@ public class BankService {
             System.out.println(acc);
         }
     }
+public void transfer(String fromId, String toId, double amount) {
+    Account fromAccount = findAccountById(fromId);
+    Account toAccount = findAccountById(toId);
+
+    if (fromAccount == null || toAccount == null) {
+        System.out.println("One or both accounts not found.");
+        return;
+    }
+
+    if (amount <= 0) {
+        System.out.println("Invalid transfer amount.");
+        return;
+    }
+
+    double initialBalance = fromAccount.getBalance();
+
+    fromAccount.withdraw(amount);
+
+    // check if withdrawal actually happened
+    if (fromAccount.getBalance() < initialBalance) {
+        toAccount.deposit(amount);
+        System.out.println("Transfer successful.");
+    } else {
+        System.out.println("Transfer failed.");
+    }
+}
 }

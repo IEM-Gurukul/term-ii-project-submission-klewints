@@ -27,5 +27,7 @@ public class Main {
         // Display all accounts
         System.out.println("\n--- Account Details ---");
         bankService.displayAllAccounts();
+        bankService.transfer("A101", "A102", 500);
+        bankService.displayAllAccounts();
     }
 }
