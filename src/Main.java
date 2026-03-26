@@ -17,7 +17,8 @@ public class Main {
             System.out.println("3. Withdraw");
             System.out.println("4. Transfer");
             System.out.println("5. View Accounts");
-            System.out.println("6. Exit");
+            System.out.println("6. View Transactions");
+            System.out.println("7. Exit");
 
             int choice = sc.nextInt();
 
@@ -38,8 +39,12 @@ public class Main {
                     bankService.displayAllAccounts();
                     break;
                 case 6:
-                    System.out.println("Exiting...");
-                    return;
+                  bankService.displayTransactions();
+                   break;
+
+                 case 7:
+                  System.out.println("Exiting...");
+                  return;
                 default:
                     System.out.println("Invalid choice");
             }
@@ -89,6 +94,10 @@ public class Main {
             double amount = sc.nextDouble();
 
             Account acc = bankService.findAccountById(id);
+             if (acc == null) {
+             System.out.println("Account not found");
+               return;
+             } 
             if (!acc.validatePin(pin)) {
            System.out.println("Invalid PIN");
            return;
@@ -112,6 +121,12 @@ public class Main {
             double amount = sc.nextDouble();
 
             Account acc = bankService.findAccountById(id);
+        
+
+          if (acc == null) {
+          System.out.println("Account not found");
+          return;
+}      
             if (!acc.validatePin(pin)) {
            System.out.println("Invalid PIN");
            return;

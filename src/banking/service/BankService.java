@@ -34,33 +34,32 @@ public class BankService {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
             return;
-        }
+         }
 
         for (Account acc : accounts) {
             System.out.println(acc);
-        }
-    }
- public void transfer(String fromId, String toId, double amount)
+          }
+      }
+        public void transfer(String fromId, String toId, double amount)
         throws AccountNotFoundException, InvalidTransactionException, InsufficientBalanceException {
 
-    Account fromAccount = findAccountById(fromId);
-    Account toAccount = findAccountById(toId);
-
-    if (fromAccount == null || toAccount == null) {
-        throw new AccountNotFoundException("One or both accounts not found");
+      Account fromAccount = findAccountById(fromId);
+     if (fromAccount == null) {
+        throw new AccountNotFoundException("Source account not found");
     }
 
-    if (amount <= 0) {
+     Account toAccount = findAccountById(toId);
+     if (toAccount == null) {
+        throw new AccountNotFoundException("Destination account not found");
+    }
+
+     if (amount <= 0) {
         throw new InvalidTransactionException("Transfer amount must be greater than zero");
     }
 
-    // Withdraw from source account
     fromAccount.withdraw(amount);
-
-    // Deposit into destination account
     toAccount.deposit(amount);
 
-    // Record transaction
     Transaction transaction = new Transaction(
             "T" + (transactions.size() + 1),
             "TRANSFER",
@@ -70,5 +69,15 @@ public class BankService {
     );
 
     transactions.add(transaction);
+}
+public void displayTransactions() {
+    if (transactions.isEmpty()) {
+        System.out.println("No transactions found.");
+        return;
+    }
+
+    for (Transaction t : transactions) {
+        System.out.println(t);
+    }
 }
 }
