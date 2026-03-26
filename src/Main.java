@@ -45,29 +45,54 @@ public class Main {
             }
         }
     }
-        static void createAccount() {
-        System.out.print("Enter ID: ");
-        String id = sc.next();
+         static void createAccount() {
+    System.out.println("Select Account Type:");
+    System.out.println("1. Savings");
+    System.out.println("2. Current");
 
-        System.out.print("Enter Name: ");
-        String name = sc.next();
+    int type = sc.nextInt();
 
-        System.out.print("Enter Balance: ");
-        double balance = sc.nextDouble();
+    System.out.print("Enter Name: ");
+    String name = sc.next();
 
-        SavingsAccount acc = new SavingsAccount(id, name, balance);
+    System.out.print("Enter Initial Balance: ");
+    double balance = sc.nextDouble();
+
+    System.out.print("Set PIN: ");
+    int pin = sc.nextInt();
+
+    if (type == 1) {
+        SavingsAccount acc = new SavingsAccount(name, balance, pin);
         bankService.addAccount(acc);
+        System.out.println("Account created. ID: " + acc.getAccountId());
+    } else if (type == 2) {
+        System.out.print("Enter Overdraft Limit: ");
+        double limit = sc.nextDouble();
+
+        CurrentAccount acc = new CurrentAccount(name, balance, pin, limit);
+        bankService.addAccount(acc);
+        System.out.println("Account created. ID: " + acc.getAccountId());
+    } else {
+        System.out.println("Invalid choice");
     }
+}
 
     static void deposit() {
         try {
             System.out.print("Enter Account ID: ");
             String id = sc.next();
+             
+            System.out.print("Enter PIN: ");
+            int pin = sc.nextInt();
 
             System.out.print("Amount: ");
             double amount = sc.nextDouble();
 
             Account acc = bankService.findAccountById(id);
+            if (!acc.validatePin(pin)) {
+           System.out.println("Invalid PIN");
+           return;
+           }
             acc.deposit(amount);
 
         } catch (Exception e) {
@@ -80,10 +105,17 @@ public class Main {
             System.out.print("Enter Account ID: ");
             String id = sc.next();
 
+            System.out.print("Enter PIN: ");
+            int pin = sc.nextInt();
+
             System.out.print("Amount: ");
             double amount = sc.nextDouble();
 
             Account acc = bankService.findAccountById(id);
+            if (!acc.validatePin(pin)) {
+           System.out.println("Invalid PIN");
+           return;
+           }
             acc.withdraw(amount);
 
         } catch (Exception e) {
@@ -91,21 +123,37 @@ public class Main {
         }
     }
 
-    static void transfer() {
-        try {
-            System.out.print("From ID: ");
-            String from = sc.next();
+   static void transfer() {
+    try {
+        System.out.print("From ID: ");
+        String from = sc.next();
 
-            System.out.print("To ID: ");
-            String to = sc.next();
+        System.out.print("To ID: ");
+        String to = sc.next();
 
-            System.out.print("Amount: ");
-            double amount = sc.nextDouble();
+        System.out.print("Enter PIN: ");
+        int pin = sc.nextInt();
 
-            bankService.transfer(from, to, amount);
+        System.out.print("Amount: ");
+        double amount = sc.nextDouble();
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Account fromAcc = bankService.findAccountById(from);
+
+        if (fromAcc == null) {
+            System.out.println("Source account not found");
+            return;
         }
+
+        if (!fromAcc.validatePin(pin)) {
+            System.out.println("Invalid PIN");
+            return;
+        }
+
+        // now safe to proceed
+        bankService.transfer(from, to, amount);
+
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
     }
+}
 }

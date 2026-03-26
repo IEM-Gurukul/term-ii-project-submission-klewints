@@ -3,9 +3,8 @@ package banking.domain;
 public class CurrentAccount extends Account {
 
     private double overdraftLimit;
-
-    public CurrentAccount(String accountId, String accountHolderName, double balance, double overdraftLimit) {
-        super(accountId, accountHolderName, balance);
+    public CurrentAccount(String accountHolderName, double balance, int pin, double overdraftLimit) {
+        super(accountHolderName, balance, pin);
         this.overdraftLimit = overdraftLimit;
     }
 

@@ -6,8 +6,8 @@ public class SavingsAccount extends Account {
 
     private static final double MIN_BALANCE = 500;
 
-    public SavingsAccount(String accountId, String accountHolderName, double balance) {
-        super(accountId, accountHolderName, balance);
+    public SavingsAccount(String accountHolderName, double balance, int pin) {
+        super(accountHolderName, balance, pin);
     }
 
     @Override

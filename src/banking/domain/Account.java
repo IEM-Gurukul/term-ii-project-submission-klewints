@@ -3,16 +3,21 @@ import banking.exception.InsufficientBalanceException;
 import banking.exception.InvalidTransactionException;
 
 public abstract class Account {
+    protected int pin;
+    private static int idCounter = 1000;
     protected String accountId;
     protected String accountHolderName;
     protected double balance;
 
-    public Account(String accountId, String accountHolderName, double balance) {
-        this.accountId = accountId;
-        this.accountHolderName = accountHolderName;
-        this.balance = balance;
-    }
-
+    public Account(String accountHolderName, double balance, int pin) {
+    this.accountId = "A" + (++idCounter);
+    this.accountHolderName = accountHolderName;
+    this.balance = balance;
+    this.pin = pin;
+ }
+    public boolean validatePin(int inputPin) {
+    return this.pin == inputPin;
+}
     public String getAccountId() {
         return accountId;
     }
