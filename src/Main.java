@@ -1,36 +1,111 @@
-import banking.domain.SavingsAccount;
-import banking.domain.CurrentAccount;
+import banking.domain.*;
 import banking.service.BankService;
 
+import java.util.Scanner;
+
 public class Main {
+
+    static BankService bankService = new BankService();
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        BankService bankService = new BankService();
+        while (true) {
+            System.out.println("\n--- Banking System ---");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transfer");
+            System.out.println("5. View Accounts");
+            System.out.println("6. Exit");
 
-        // Create accounts
-        SavingsAccount acc1 = new SavingsAccount("A101", "John Doe", 2000);
-        SavingsAccount acc2 = new SavingsAccount("A102", "Jane Smith", 1500);
-        CurrentAccount acc3 = new CurrentAccount("A103", "Mike Ross", 1000, 500);
-        bankService.addAccount(acc3);
-         acc3.withdraw(1300); // should use overdraft
+            int choice = sc.nextInt();
 
-        // Add accounts to service
-        bankService.addAccount(acc1);
-        bankService.addAccount(acc2);
+            switch (choice) {
+                case 1:
+                    createAccount();
+                    break;
+                case 2:
+                    deposit();
+                    break;
+                case 3:
+                    withdraw();
+                    break;
+                case 4:
+                    transfer();
+                    break;
+                case 5:
+                    bankService.displayAllAccounts();
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+        static void createAccount() {
+        System.out.print("Enter ID: ");
+        String id = sc.next();
 
-        // Perform operations // should respect minimum balance
+        System.out.print("Enter Name: ");
+        String name = sc.next();
+
+        System.out.print("Enter Balance: ");
+        double balance = sc.nextDouble();
+
+        SavingsAccount acc = new SavingsAccount(id, name, balance);
+        bankService.addAccount(acc);
+    }
+
+    static void deposit() {
         try {
-        acc1.withdraw(1000);
-        acc2.withdraw(1200);
-        bankService.transfer("A101", "A102", 500);
-        } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());
-     }
+            System.out.print("Enter Account ID: ");
+            String id = sc.next();
 
-        // Display all accounts
-        System.out.println("\n--- Account Details ---");
-        bankService.displayAllAccounts();
-        
-        bankService.displayAllAccounts();
+            System.out.print("Amount: ");
+            double amount = sc.nextDouble();
+
+            Account acc = bankService.findAccountById(id);
+            acc.deposit(amount);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void withdraw() {
+        try {
+            System.out.print("Enter Account ID: ");
+            String id = sc.next();
+
+            System.out.print("Amount: ");
+            double amount = sc.nextDouble();
+
+            Account acc = bankService.findAccountById(id);
+            acc.withdraw(amount);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void transfer() {
+        try {
+            System.out.print("From ID: ");
+            String from = sc.next();
+
+            System.out.print("To ID: ");
+            String to = sc.next();
+
+            System.out.print("Amount: ");
+            double amount = sc.nextDouble();
+
+            bankService.transfer(from, to, amount);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
