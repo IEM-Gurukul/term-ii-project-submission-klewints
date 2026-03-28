@@ -3,6 +3,7 @@ package banking.service;
 import banking.domain.Account;
 import banking.domain.Transaction;
 import banking.persistence.FileHandler;
+import banking.repository.AccountRepository;
 import banking.exception.AccountNotFoundException;
 import banking.exception.InvalidTransactionException;
 import banking.exception.InsufficientBalanceException;
@@ -12,35 +13,26 @@ public class BankService {
 
     private ArrayList<Account> accounts;
     private ArrayList<Transaction> transactions = new ArrayList<>();
+    private AccountRepository repository;
 
     public BankService() {
         accounts = FileHandler.loadAccounts();
+        repository = new AccountRepository(accounts);
     }
 
-    public void addAccount(Account account) {
-        accounts.add(account);
-        System.out.println("Account added successfully.");
-    }
+    public void addAccount(Account acc) {
+    repository.addAccount(acc);
+}
 
-    public Account findAccountById(String accountId) {
-        for (Account acc : accounts) {
-            if (acc.getAccountId().equals(accountId)) {
-                return acc;
-            }
-        }
-        return null;
-    }
+    public Account findAccountById(String id) {
+    return repository.findById(id);
+}
 
     public void displayAllAccounts() {
-        if (accounts.isEmpty()) {
-            System.out.println("No accounts available.");
-            return;
-         }
-
-        for (Account acc : accounts) {
-            System.out.println(acc);
-          }
-      }
+    for (Account acc : repository.getAllAccounts()) {
+        System.out.println(acc);
+    }
+}
         public void transfer(String fromId, String toId, double amount)
         throws AccountNotFoundException, InvalidTransactionException, InsufficientBalanceException {
 
