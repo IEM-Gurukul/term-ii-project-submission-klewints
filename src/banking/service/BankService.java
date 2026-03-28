@@ -2,6 +2,7 @@ package banking.service;
 
 import banking.domain.Account;
 import banking.domain.Transaction;
+import banking.persistence.FileHandler;
 import banking.exception.AccountNotFoundException;
 import banking.exception.InvalidTransactionException;
 import banking.exception.InsufficientBalanceException;
@@ -13,7 +14,7 @@ public class BankService {
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public BankService() {
-        accounts = new ArrayList<>();
+        accounts = FileHandler.loadAccounts();
     }
 
     public void addAccount(Account account) {
@@ -79,5 +80,8 @@ public void displayTransactions() {
     for (Transaction t : transactions) {
         System.out.println(t);
     }
+}
+public void saveData() {
+    FileHandler.saveAccounts(accounts);
 }
 }

@@ -41,9 +41,9 @@ public class Main {
                 case 6:
                   bankService.displayTransactions();
                    break;
-
-                 case 7:
-                  System.out.println("Exiting...");
+                case 7:
+                 bankService.saveData();
+                 System.out.println("Data saved. Exiting...");
                   return;
                 default:
                     System.out.println("Invalid choice");
