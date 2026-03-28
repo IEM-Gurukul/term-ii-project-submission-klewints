@@ -21,7 +21,8 @@ public class FileHandler {
                 writer.write(type + "," +
                         acc.getAccountId() + "," +
                         acc.getAccountHolderName() + "," +
-                        acc.getBalance());
+                        acc.getBalance() + "," +
+                        acc.getPin());
 
                 writer.newLine();
             }
@@ -46,14 +47,15 @@ public class FileHandler {
                 String id = parts[1];
                 String name = parts[2];
                 double balance = Double.parseDouble(parts[3]);
+                int pin = Integer.parseInt(parts[4]);
 
                 Account acc;
 
                 if (type.equals("SAVINGS")) {
-                    acc = new SavingsAccount(name, balance, 1234); // dummy PIN
+                  acc = new SavingsAccount(name, balance, pin);
                 } else {
-                    acc = new CurrentAccount(name, balance, 1234, 1000);
-                }
+                 acc = new CurrentAccount(name, balance, pin, 1000);
+               }
                acc.setAccountId(id);
                 accounts.add(acc);
             }

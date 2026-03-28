@@ -16,6 +16,7 @@ public abstract class Account {
     this.pin = pin;
 
  }
+ 
     public boolean validatePin(int inputPin) {
     return this.pin == inputPin;
 }
@@ -26,6 +27,9 @@ public abstract class Account {
     public String getAccountHolderName() {
         return accountHolderName;
     }
+    public int getPin() {
+    return pin;
+}
 
     public double getBalance() {
         return balance;
