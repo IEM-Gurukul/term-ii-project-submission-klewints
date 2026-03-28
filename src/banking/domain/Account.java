@@ -16,7 +16,9 @@ public abstract class Account {
     this.pin = pin;
 
  }
- 
+ public void setAccountId(String accountId) {
+    this.accountId = accountId;
+}
     public boolean validatePin(int inputPin) {
     return this.pin == inputPin;
 }
@@ -34,9 +36,6 @@ public abstract class Account {
     public double getBalance() {
         return balance;
     }
-    public void setAccountId(String accountId) {
-    this.accountId = accountId;
-}
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
