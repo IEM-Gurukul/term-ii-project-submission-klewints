@@ -23,7 +23,9 @@ public class BankService {
     public void addAccount(Account acc) {
     repository.addAccount(acc);
 }
-
+public ArrayList<Account> getAllAccounts() {
+    return repository.getAllAccounts();
+}
     public Account findAccountById(String id) {
     return repository.findById(id);
 }
@@ -72,6 +74,9 @@ public void displayTransactions() {
     for (Transaction t : transactions) {
         System.out.println(t);
     }
+}
+public ArrayList<Transaction> getTransactions() {
+    return transactions;
 }
 public void saveData() {
     FileHandler.saveAccounts(accounts);
