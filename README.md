@@ -121,11 +121,11 @@ Transaction History: ArrayList<Transaction> records all transfers.
 The system follows a **5-layer architecture** pattern, promoting **separation of concerns** and **loose coupling**:
  ```mermaid
 graph TD
-    A[Presentation Layer (UI)]
+    A[Presentation Layer]
     B[Service Layer (Business Logic)]
     C[Repository Layer (Data Access)]
     D[Persistence Layer (File Handling)]
-    E[Domain Layer (Models)]
+    E[Domain Layer]
 
     A --> B
     B --> C
@@ -168,17 +168,17 @@ String Representation: Human-readable transaction details
 
 ### Exception Layer (Custom Exceptions)
 
-#### InsufficientBalanceException.java
+`InsufficientBalanceException.java`
 Extends Exception
 Triggers when withdrawal amount exceeds available balance
 Includes custom error message
 
-#### InvalidTransactionException.java
+`InvalidTransactionException.java`
 Extends Exception
 Triggers for invalid transaction amounts (≤ 0)
 Triggers for invalid operations
 
-#### AccountNotFoundException.java
+`AccountNotFoundException.java`
 Extends Exception
 Triggers when account lookup fails
 Provides account not found error message
@@ -188,8 +188,11 @@ AccountRepository.java
 Responsibility: In-memory data access abstraction
 Methods:
 addAccount(Account): Insert new account
+
 `findById(String)`: Retrieve account by ID
+
 `getAllAccounts()`: Return all accounts
+
 Benefit: Abstracts data storage from business logic (enables future database integration)
 
 ### Persistence Layer (File I/O)
