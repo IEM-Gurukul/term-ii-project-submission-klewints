@@ -121,10 +121,10 @@ Transaction History: ArrayList<Transaction> records all transfers.
 The system follows a **5-layer architecture** pattern, promoting **separation of concerns** and **loose coupling**:
  ```mermaid
 graph TD
-    A[Presentation Layer]
-    B[Service Layer (Business Logic)]
-    C[Repository Layer (Data Access)]
-    D[Persistence Layer (File Handling)]
+    A[Presentation Layer/UI]
+    B[Service Layer/Business Logic]
+    C[Repository Layer/Data Access]
+    D[Persistence Layer/File Handling]
     E[Domain Layer]
 
     A --> B
